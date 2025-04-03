@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: telegram-trade-dashboard
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python Telegram_Trade_Bot.py
+    plan: free
+    envVars:
+      - key: WEB_CONCURRENCY
+        value: "1"

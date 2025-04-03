@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.env.*
+*.sqlite3
+trade_log.txt
+bot_session*
+*.log
+.idea/
+.vscode/
+*.DS_Store
