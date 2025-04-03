@@ -214,4 +214,3 @@ def start_telegram():
 threading.Thread(target=start_flask).start()
 print("Starting Telegram bot...")
 start_telegram()
-<INSERTED SCRIPT FROM CANVAS>
