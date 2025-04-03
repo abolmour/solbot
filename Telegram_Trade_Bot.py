@@ -6,6 +6,7 @@ import base64
 import json
 import logging
 import threading
+import os
 from solders.keypair import Keypair
 from solders.transaction import Transaction
 from solders.pubkey import Pubkey
@@ -26,7 +27,7 @@ JUPITER_QUOTE_API = 'https://quote-api.jup.ag/v6/quote'
 JUPITER_PRICE_API = 'https://price.jup.ag/v4/price'
 JUPITER_TOKEN_LIST = 'https://cache.jup.ag/tokens'
 
-wallet = Keypair.from_base58_string("YOUR_BASE58_SECRET_KEY")
+wallet = Keypair.from_base58_string(os.getenv("WALLET_SECRET"))
 public_key = wallet.pubkey()
 
 logging.basicConfig(filename='trade_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
@@ -87,7 +88,6 @@ def get_jupiter_swap(quote):
 
 def send_signed_tx(base64_tx):
     try:
-        import base64
         from solders.rpc.requests import SendTransaction
         from solana.rpc.api import Client
         from solana.rpc.types import TxOpts
