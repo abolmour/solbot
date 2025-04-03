@@ -1,5 +1,5 @@
 telethon
-solana-py
+solana
 flask
 requests
 plotly
