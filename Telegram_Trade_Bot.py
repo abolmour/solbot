@@ -19,6 +19,7 @@ import uuid
 api_id = 'YOUR_TELEGRAM_API_ID'
 api_hash = 'YOUR_TELEGRAM_API_HASH'
 channel_username = 'SoEarlyTrending'
+
 AUTH_PASSWORD = 'admin123'
 
 SOLANA_RPC_URL = 'https://api.mainnet-beta.solana.com'
@@ -31,6 +32,7 @@ wallet = Keypair.from_secret_key(base64.b64decode("YOUR_BASE64_SECRET_KEY=="))
 solana_client = Client(SOLANA_RPC_URL)
 
 logging.basicConfig(filename='trade_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
+
 client = TelegramClient('bot_session', api_id, api_hash)
 
 app = Flask(__name__)
