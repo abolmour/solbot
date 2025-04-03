@@ -9,8 +9,8 @@ import threading
 from solders.keypair import Keypair
 from solana.rpc.api import Client
 from solana.rpc.types import TxOpts
-from solana.transaction import Transaction
-from solana.publickey import PublicKey
+from solders.transaction import Transaction
+from solders.publickey import PublicKey
 from flask import Flask, request, jsonify, render_template_string, redirect
 import plotly
 import plotly.graph_objs as go
