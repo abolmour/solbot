@@ -6,7 +6,7 @@ import base64
 import json
 import logging
 import threading
-from solana.keypair import Keypair
+from solders.keypair import Keypair
 from solana.rpc.api import Client
 from solana.rpc.types import TxOpts
 from solana.transaction import Transaction
