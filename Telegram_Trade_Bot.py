@@ -32,7 +32,7 @@ wallet = Keypair.from_base58_string(os.getenv("WALLET_SECRET"))
 public_key = wallet.pubkey()
 
 logging.basicConfig(filename='trade_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
-client = TelegramClient('bot_session', api_id, api_hash).start(bot_token=bot_token)
+client = TelegramClient('bot_session', 0, '').start(bot_token=bot_token)
 
 app = Flask(__name__)
 trade_history = []
