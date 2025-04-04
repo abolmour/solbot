@@ -15,11 +15,8 @@ import plotly
 import plotly.graph_objs as go
 import uuid
 
-api_id = int(os.getenv("TELEGRAM_API_ID"))
-api_hash = os.getenv("TELEGRAM_API_HASH")
 bot_token = os.getenv("BOT_TOKEN")
 channel_username = 'SoEarlyTrending'
-
 AUTH_PASSWORD = 'admin123'
 
 SOLANA_RPC_URL = 'https://api.mainnet-beta.solana.com'
@@ -169,8 +166,18 @@ def manual_buy():
     buy_token(symbol, amount)
     return redirect(f"/?auth={AUTH_PASSWORD}")
 
+@client.on(events.NewMessage(pattern='/start'))
+async def start_handler(event):
+    await event.reply("👋 Welcome to your Solana Trading Bot! Use /buy <TOKEN> <AMOUNT> to place a trade.")
+
+@client.on(events.NewMessage(pattern='/buy (\w+) (\d+\.?\d*)'))
+async def buy_handler(event):
+    symbol, amount = event.pattern_match.groups()
+    buy_token(symbol.upper(), float(amount))
+    await event.reply(f"🛒 Buying {symbol.upper()} with {amount} SOL!")
+
 @client.on(events.NewMessage(chats=channel_username))
-async def handler(event):
+async def call_handler(event):
     message = event.message.message
     if message and "$" in message and "Entry Signal" in message:
         token = extract_token(message)
