@@ -171,10 +171,5 @@ async def handler(event):
 def start_flask():
     app.run(host='0.0.0.0', port=5000)
 
-def start_telegram():
-    client.start()
-    client.run_until_disconnected()
-
 threading.Thread(target=start_flask).start()
 print("Starting Telegram bot...")
-start_telegram()
