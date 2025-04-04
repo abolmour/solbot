@@ -15,8 +15,8 @@ import plotly
 import plotly.graph_objs as go
 import uuid
 
-api_id = 'YOUR_TELEGRAM_API_ID'
-api_hash = 'YOUR_TELEGRAM_API_HASH'
+api_id = int(os.getenv("TELEGRAM_API_ID"))
+api_hash = os.getenv("TELEGRAM_API_HASH")
 channel_username = 'SoEarlyTrending'
 
 AUTH_PASSWORD = 'admin123'
