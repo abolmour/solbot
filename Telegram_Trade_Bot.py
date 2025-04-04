@@ -17,6 +17,7 @@ import uuid
 
 api_id = int(os.getenv("TELEGRAM_API_ID"))
 api_hash = os.getenv("TELEGRAM_API_HASH")
+bot_token = os.getenv("BOT_TOKEN")
 channel_username = 'SoEarlyTrending'
 
 AUTH_PASSWORD = 'admin123'
@@ -31,7 +32,7 @@ wallet = Keypair.from_base58_string(os.getenv("WALLET_SECRET"))
 public_key = wallet.pubkey()
 
 logging.basicConfig(filename='trade_log.txt', level=logging.INFO, format='%(asctime)s - %(message)s')
-client = TelegramClient('bot_session', api_id, api_hash)
+client = TelegramClient('bot_session', api_id, api_hash).start(bot_token=bot_token)
 
 app = Flask(__name__)
 trade_history = []
@@ -123,6 +124,14 @@ def buy_token(symbol, amount):
     trade_history.append({"type": "BUY", "symbol": symbol, "tx": result})
     print(f"[SUCCESS] Sent buy tx: {result}")
 
+def generate_chart():
+    symbols = [t['symbol'] for t in trade_history]
+    indices = list(range(1, len(symbols) + 1))
+    types = [t['type'] for t in trade_history]
+    trace = go.Scatter(x=indices, y=symbols, mode='markers+lines', text=types)
+    fig = go.Figure(data=[trace])
+    return plotly.io.to_html(fig, full_html=False)
+
 def dashboard():
     html = """
     <html><head><title>Trade Dashboard</title></head>
@@ -140,8 +149,10 @@ def dashboard():
         <li>{{ trade['type'] }} {{ trade['symbol'] }} - TX: {{ trade['tx'] }}</li>
         {% endfor %}
     </ul>
+    <h3>Trade Chart:</h3>
+    {{ chart|safe }}
     </body></html>"""
-    return render_template_string(html, trades=trade_history[-20:], balance=get_wallet_balance(), auth=AUTH_PASSWORD)
+    return render_template_string(html, trades=trade_history[-20:], balance=get_wallet_balance(), auth=AUTH_PASSWORD, chart=generate_chart())
 
 @app.route('/')
 def home():
@@ -172,4 +183,4 @@ def start_flask():
     app.run(host='0.0.0.0', port=5000)
 
 threading.Thread(target=start_flask).start()
-print("Starting Telegram bot...")
+print("Bot is running with Flask and Telegram client")
